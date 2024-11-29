@@ -4,35 +4,35 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
+import java.io.*;
+
+public class AppTest extends TestCase {
+    
+    public AppTest(String testName) {
+        super(testName);
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
+    public static Test suite() {
+        return new TestSuite(AppTest.class);
     }
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+    public void testMain() {
+
+        PrintStream originalOut = System.out;
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        System.setOut(printStream);
+
+        String[] args = {};
+        App.main(args);
+
+        System.setOut(originalOut);
+
+        String expectedOutput = "Sun of the sleepless! Melancholy star!";
+
+        String actualOutput = outputStream.toString().trim(); // Удаляем лишние пробелы и переносы
+
+        assertEquals(expectedOutput, actualOutput);
     }
 }
